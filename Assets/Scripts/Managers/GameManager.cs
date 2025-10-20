@@ -8,6 +8,11 @@ public class GameManager : MonoBehaviour
     private static SoundManager         _sound;
     private static SceneChangeManager   _scene;
     private static TimeManager          _time;
+    private static CameraManager        _camera;
+    private static CommandManager       _command;
+    private static CoroutineManager     _coroutine;
+    
+    
 
 
     public static GameManager Game
@@ -25,6 +30,7 @@ public class GameManager : MonoBehaviour
             return _game;
         }
     }
+    
     public static ResourceManager Resource
     {
         get
@@ -37,6 +43,7 @@ public class GameManager : MonoBehaviour
             return _resource;
         }
     }
+
     public static ObjectManager Object
     {
         get
@@ -48,6 +55,7 @@ public class GameManager : MonoBehaviour
             return _object;
         }
     }
+
     public static SoundManager Sound
     {
         get
@@ -83,4 +91,42 @@ public class GameManager : MonoBehaviour
             return _time;
         }
     }
+
+    public static CameraManager Camera
+    {
+        get
+        {
+            if (_camera == null)
+            {
+                _camera = new();
+            }
+            return _camera;
+        }
+    }
+
+    public static CommandManager Command
+    {
+        get
+        {
+            if (_command == null)
+            {
+                _command = new();
+            }
+            return _command;
+        }
+    }
+
+    public static CoroutineManager Coroutine
+    {
+        get
+        {
+            if (_coroutine == null)
+            {
+                _coroutine = new();
+            }
+            return _coroutine;
+        }
+    }
+
+    
 }
