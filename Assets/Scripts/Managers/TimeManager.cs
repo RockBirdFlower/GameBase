@@ -5,13 +5,13 @@ public class TimeManager
     private float _prevTimeScale;
     private bool _isStop = false;
     private const int _maxTimeScale = 5;
-    public void SetStop()
+    public void Pause()
     {
         _isStop = true;
         SetTimeScale(0);
     }
 
-    public void SetPlay()
+    public void Play()
     {
         if (_isStop == false) return;
         SetTimeScale(_prevTimeScale);

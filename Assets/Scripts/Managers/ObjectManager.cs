@@ -9,7 +9,7 @@ public class ObjectManager
     {
         if(_root == null)
         {
-            _root = new GameObject("ObjectManager").transform;
+            _root = new GameObject($"{Defines.ManagerType.ObjectManager}").transform;
         }
         GameObject resource = GameManager.Resource.GetPrefab(prefabName);
         GameObject prefab = null;

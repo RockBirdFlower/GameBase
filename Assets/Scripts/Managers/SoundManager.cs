@@ -34,7 +34,7 @@ public class SoundManager
         if (_root == null)
         {
             _sfxCount = 0;
-            _root = new GameObject("SoundManager").transform;
+            _root = new GameObject($"{Defines.ManagerType.SoundManager}").transform;
             _cts = new();
         }
 
@@ -54,7 +54,7 @@ public class SoundManager
         {
             if (_maxSfxCount <= _sfxCount) return;
 
-            GameObject clone = new GameObject("Sfx");
+            GameObject clone = new GameObject($"{Defines.SoundType.Sfx}");
             clone.transform.SetParent(_root);
             audio = clone.AddComponent<AudioSource>();
             _sfxCount++;

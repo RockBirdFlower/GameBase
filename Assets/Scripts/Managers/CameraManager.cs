@@ -19,7 +19,7 @@ public class CameraManager
                 if (_cam == null)
                 {
                     GameObject clone = new GameObject();
-                    clone.name = "MainCamera";
+                    clone.name = $"{Defines.ManagerType.CameraManager}";
                     _cam = clone.AddComponent<Camera>();
                 }
             }

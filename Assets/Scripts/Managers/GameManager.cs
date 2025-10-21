@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private static CameraManager        _camera;
     private static CommandManager       _command;
     private static CoroutineManager     _coroutine;
+    private static UIManager            _ui;
+    
     
     
 
@@ -22,7 +24,7 @@ public class GameManager : MonoBehaviour
             if (_game == null)
             {
                 GameObject clone = new GameObject();
-                clone.name = "GameManager";
+                clone.name = $"{Defines.ManagerType.GameManager}";
                 _game = clone.AddComponent<GameManager>();
                 DontDestroyOnLoad(_game);
             }
@@ -125,6 +127,18 @@ public class GameManager : MonoBehaviour
                 _coroutine = new();
             }
             return _coroutine;
+        }
+    }
+
+    public static UIManager UI
+    {
+        get
+        {
+            if (_ui == null)
+            {
+                _ui = new();
+            }
+            return _ui;
         }
     }
 

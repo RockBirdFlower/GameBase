@@ -23,7 +23,7 @@ public class CoroutineManager
             if (destroyed == null)
             {
                 GameObject clone = new GameObject();
-                clone.name = "CroutineManager";
+                clone.name = $"{Defines.ManagerType.CoroutineManager}";
                 destroyed = clone.AddComponent<CoroutineController>();
             }
             destroyed.StartCoroutine(coroutine);
