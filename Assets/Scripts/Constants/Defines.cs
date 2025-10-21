@@ -14,6 +14,15 @@ public static class Defines
         UIManager,
     }
 
+    public enum SceneType
+    {
+        NoneScene,
+        TestScene,
+        TitleScene,
+        MainScene,
+        GameScene,
+    }
+
     public enum SoundType
     {
         Bgm,

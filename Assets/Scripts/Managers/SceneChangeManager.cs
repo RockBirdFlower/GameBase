@@ -1,6 +1,5 @@
-using UnityEngine.SceneManagement;
 
-public class SceneChangeManager
+public class SceneManager
 {
     private string _currentScene;
     public string CurrentScene
@@ -14,6 +13,6 @@ public class SceneChangeManager
     public void SetScene(string sceneName)
     {
         _currentScene = sceneName;
-        SceneManager.LoadScene(sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 }

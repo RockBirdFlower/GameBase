@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     private static ResourceManager      _resource;
     private static ObjectManager        _object;
     private static SoundManager         _sound;
-    private static SceneChangeManager   _scene;
+    private static SceneManager   _scene;
     private static TimeManager          _time;
     private static CameraManager        _camera;
     private static CommandManager       _command;
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public static SceneChangeManager Scene
+    public static SceneManager Scene
     {
         get
         {
