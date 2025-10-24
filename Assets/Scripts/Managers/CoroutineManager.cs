@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CoroutineManager
@@ -8,15 +9,15 @@ public class CoroutineManager
     private MonoBehaviour dondestroy; // 재사용
     private MonoBehaviour destroyed; // 사용중 파괴 가능
 
-    public void StartCoroutine(IEnumerator coroutine, bool isDondestroy=false)
+    public void StartCoroutine(IEnumerator coroutine, bool isDondestroy = false)
     {
         if (isDondestroy)
         {
             if (dondestroy == null)
             {
-                dondestroy = GameManager.Game.gameObject.GetComponent<MonoBehaviour>();
+                dondestroy = GameManager.Game;
             }
-            dondestroy.StartCoroutine(coroutine);
+                dondestroy.StartCoroutine(coroutine);   
         }
         else
         {
@@ -27,6 +28,50 @@ public class CoroutineManager
                 destroyed = clone.AddComponent<CoroutineController>();
             }
             destroyed.StartCoroutine(coroutine);
+        }
+    }
+
+    public void StopCoroutine(IEnumerator coroutine, bool isDondestroy = false)
+    {
+        if (isDondestroy)
+        {
+            if (dondestroy == null)
+            {
+                dondestroy = GameManager.Game.gameObject.GetComponent<MonoBehaviour>();
+            }
+            dondestroy.StopCoroutine(coroutine);
+        }
+        else
+        {
+            if (destroyed == null)
+            {
+                GameObject clone = new GameObject();
+                clone.name = $"{Defines.ManagerType.CoroutineManager}";
+                destroyed = clone.AddComponent<CoroutineController>();
+            }
+            destroyed.StopCoroutine(coroutine);
+        }
+    }
+    
+     public void StopAllCoroutines(bool isDondestroy = false)
+    {
+        if (isDondestroy)
+        {
+            if (dondestroy == null)
+            {
+                dondestroy = GameManager.Game.gameObject.GetComponent<MonoBehaviour>();
+            }
+            dondestroy.StopAllCoroutines();
+        }
+        else
+        {
+            if (destroyed == null)
+            {
+                GameObject clone = new GameObject();
+                clone.name = $"{Defines.ManagerType.CoroutineManager}";
+                destroyed = clone.AddComponent<CoroutineController>();
+            }
+            destroyed.StopAllCoroutines();
         }
     }
     

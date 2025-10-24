@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class SoundManager
 {
@@ -11,22 +13,56 @@ public class SoundManager
     private AudioSource _bgm;
     private Queue<AudioSource> _sfxs = new();
     private int _sfxCount = 0;
-    private const int _maxSfxCount = 40;
     private CancellationTokenSource _cts;
+    private List<AudioClip> _bgmList = new();
+    private float _sfxVolume = 1f;
+    private float _bgmVolume = 1f;
 
-    public void PlayBgm(string bgmName)
+    public void Init()
     {
-        if (_bgm == null)
+        _sfxVolume = PlayerPrefs.GetFloat(Consts.SFX_VOLUME, 1f);
+        _bgmVolume = PlayerPrefs.GetFloat(Consts.BGM_VOLUME, 1f);
+        _bgm = GameManager.Game.AddComponent<AudioSource>();
+    }
+
+    public void SetSfxVolume(float volume)
+    {
+        PlayerPrefs.SetFloat(Consts.SFX_VOLUME, volume);
+        _sfxVolume = volume;
+    }
+    
+    public void SetBgmVolume(float volume)
+    {
+        PlayerPrefs.SetFloat(Consts.BGM_VOLUME, volume);
+        _bgmVolume = volume;
+        _bgm.volume = volume;
+    }
+
+    public void PlayBgmList(List<string> clipNames)
+    {
+        _bgmList.Clear();
+        for (int i = 0; i < clipNames.Count; i++)
         {
-            _bgm = GameManager.Game.GetOrAddComponent<AudioSource>();
+            AudioClip clip = GameManager.Resource.GetClip(clipNames[i]);
+            if (clip == null) continue;
+            _bgmList.Add(clip);
         }
 
-        AudioClip clip = null;
-        clip = GameManager.Resource.GetClip(bgmName);
-
-        if (clip == null) return;
-
-        _bgm.PlayOneShot(clip);
+        if (_bgmList.Count == 0) return;
+        GameManager.Coroutine.StartCoroutine(CoBgmListPlay(), true);
+    }
+    
+    private IEnumerator CoBgmListPlay()
+    {
+        int idx = 0;
+        while (_bgmList.Count > 0)
+        {
+            AudioClip clip = _bgmList[idx];
+            _bgm.volume = _bgmVolume;
+            _bgm.PlayOneShot(clip);
+            idx = (idx + 1) % _bgmList.Count;
+            yield return GameManager.Coroutine.GetWfs(clip.length);
+        }
     }
 
     public void PlaySfx(string sfxName)
@@ -52,11 +88,12 @@ public class SoundManager
         }
         else
         {
-            if (_maxSfxCount <= _sfxCount) return;
+            if (Consts.MAX_SFX_COUNT <= _sfxCount) return;
 
             GameObject clone = new GameObject($"{Defines.SoundType.Sfx}");
             clone.transform.SetParent(_root);
             audio = clone.AddComponent<AudioSource>();
+            audio.volume = _sfxVolume;
             _sfxCount++;
         }
 

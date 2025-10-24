@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
             if (_sound == null)
             {
                 _sound = new();
+                _sound.Init();
             }
             return _sound;
         }

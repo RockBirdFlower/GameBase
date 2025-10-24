@@ -4,7 +4,7 @@ public class TimeManager
 {
     private float _prevTimeScale;
     private bool _isStop = false;
-    private const int _maxTimeScale = 5;
+    
     public void Pause()
     {
         _isStop = true;
@@ -21,7 +21,8 @@ public class TimeManager
     public void SetTimeScale(float timeScale)
     {
         _prevTimeScale = Time.timeScale;
-        Time.timeScale = timeScale;
+        Time.timeScale =
+            Mathf.Clamp(timeScale, Consts.MIN_TIME_SCALE, Consts.MAX_TIME_SCALE);
     }
 
     public string GetTimeString()
