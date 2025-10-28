@@ -4,6 +4,8 @@ public class TimeManager
 {
     private float _prevTimeScale;
     private bool _isStop = false;
+
+    public void Init(){}
     
     public void Pause()
     {

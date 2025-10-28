@@ -8,31 +8,31 @@ public class TestScene : MonoBehaviour
 {
     void Start()
     {
-        _ = GameManager.Game;
-        GameManager.Object.Create("Test");
-        GameManager.Sound.PlayBgmList(new List<string>(){"TestBgm"});
-        GameManager.Sound.PlaySfx("TestSfx");
+        _ = Managers.Manager;
+        Managers.Object.Create("Test");
+        Managers.Sound.PlayBgmList(new List<string>(){"TestBgm"});
+        Managers.Sound.PlaySfx("TestSfx");
 
-        GameManager.Coroutine.StartCoroutine(CoTest(), true);
+        Managers.Coroutine.StartCoroutine(CoTest(), true);
 
-        var image = GameManager.UI.Open("TestUI").GetComponentInChild<Image>("Image_1");
+        var image = Managers.UI.Open("TestUI").GetComponentInChild<Image>("Image_1");
         
     }
 
     IEnumerator CoTest()
     {
-        yield return GameManager.Coroutine.GetWfs(2.5f);
+        yield return Managers.Coroutine.GetWfs(2.5f);
 
-        GameManager.Sound.PlaySfx("TestSfx");
+        Managers.Sound.PlaySfx("TestSfx");
 
     }
 
     
     void Update()
     {
-        if (GameManager.Command.GetKey(Key.A)) Debug.Log("A");
-        if(GameManager.Command.GetkeyDown(Key.S)) GameManager.Sound.PlaySfx("TestSfx");
-        if (GameManager.Command.GetkeyUp(Key.D)) Debug.Log("D");
-        if (GameManager.Command.GetkeyDown(Key.Escape)) GameManager.Scene.Toggle();
+        if (Managers.Command.GetKey(Key.A)) Debug.Log("A");
+        if(Managers.Command.GetkeyDown(Key.S)) Managers.Sound.PlaySfx("TestSfx");
+        if (Managers.Command.GetkeyUp(Key.D)) Debug.Log("D");
+        if (Managers.Command.GetkeyDown(Key.Escape)) Managers.Scene.Toggle();
     }
 }

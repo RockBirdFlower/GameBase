@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class CommandManager
 {
+
+    public void Init(){}
+
+    
     public bool GetKey(Key key) // 키보드 눌러질때 지속
     {
         if (Keyboard.current == null) return false;
@@ -82,7 +86,7 @@ public class CommandManager
 
     public Vector2 GetMouseWorldPosition()
     {
-        Camera cam = GameManager.Camera.MainCamera;
+        Camera cam = Managers.Camera.MainCamera;
         if (Mouse.current == null) return Vector2.zero;
 
         Vector2 wolrdPosition = cam.ScreenToWorldPoint(GetMousePosition());

@@ -22,17 +22,19 @@ public class SceneManager
             if (_transition == null)
             {
                 _transition = new();
-                _transition.transitionGo = GameManager.Object.Create("SceneTransition");
+                _transition.transitionGo = Managers.Object.Create("SceneTransition");
                 _transition.rect = _transition.transitionGo.GetComponentInChildTransform("TransitionRect") as RectTransform;
             }
             return _transition;
         }
     }
 
+    public void Init(){}
+
     public void SetScene(string sceneName, float duration = 1f)
     {
         _currentScene = sceneName;
-        GameManager.Coroutine.StartCoroutine(CoSetScene(duration), true);
+        Managers.Coroutine.StartCoroutine(CoSetScene(duration), true);
     }
 
     private IEnumerator CoSetScene(float duration)
@@ -50,12 +52,12 @@ public class SceneManager
 
     public void Open()
     {
-        GameManager.Coroutine.StartCoroutine(Transition.CoOpen(), true);
+        Managers.Coroutine.StartCoroutine(Transition.CoOpen(), true);
     }
     
     public void Close()
     {
-        GameManager.Coroutine.StartCoroutine(Transition.CoClose(), true);
+        Managers.Coroutine.StartCoroutine(Transition.CoClose(), true);
     }
 }
 

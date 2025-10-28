@@ -7,7 +7,7 @@ public class ResourceManager
     private Dictionary<string, GameObject> _prefabs = new();
     private Dictionary<string, AudioClip> _clips = new();
     private Dictionary<string, Sprite> _sprites = new();
-    public void Setup()
+    public void Init()
     {
         _prefabs = Resources.LoadAll<GameObject>("Prefabs/").ToDictionary((x) => x.name, (x) => x);
         _clips = Resources.LoadAll<AudioClip>("Sounds/").ToDictionary((x) => x.name, (x) => x);

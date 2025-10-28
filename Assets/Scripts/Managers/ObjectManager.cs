@@ -5,13 +5,15 @@ public class ObjectManager
 {
     private Dictionary<string, Queue<GameObject>> _prefabs = new();
     private Transform _root;
+
+    public void Init(){}
     public GameObject Create(string prefabName, bool isPooling = false)
     {
         if(_root == null)
         {
             _root = new GameObject($"{Defines.ManagerType.ObjectManager}").transform;
         }
-        GameObject resource = GameManager.Resource.GetPrefab(prefabName);
+        GameObject resource = Managers.Resource.GetPrefab(prefabName);
         GameObject prefab = null;
         if (resource == null) return prefab;
         if (isPooling)

@@ -22,7 +22,7 @@ public class SoundManager
     {
         _sfxVolume = PlayerPrefs.GetFloat(Consts.SFX_VOLUME, 1f);
         _bgmVolume = PlayerPrefs.GetFloat(Consts.BGM_VOLUME, 1f);
-        _bgm = GameManager.Game.AddComponent<AudioSource>();
+        _bgm = Managers.Manager.AddComponent<AudioSource>();
     }
 
     public void SetSfxVolume(float volume)
@@ -43,13 +43,13 @@ public class SoundManager
         _bgmList.Clear();
         for (int i = 0; i < clipNames.Count; i++)
         {
-            AudioClip clip = GameManager.Resource.GetClip(clipNames[i]);
+            AudioClip clip = Managers.Resource.GetClip(clipNames[i]);
             if (clip == null) continue;
             _bgmList.Add(clip);
         }
 
         if (_bgmList.Count == 0) return;
-        GameManager.Coroutine.StartCoroutine(CoBgmListPlay(), true);
+        Managers.Coroutine.StartCoroutine(CoBgmListPlay(), true);
     }
     
     private IEnumerator CoBgmListPlay()
@@ -61,7 +61,7 @@ public class SoundManager
             _bgm.volume = _bgmVolume;
             _bgm.PlayOneShot(clip);
             idx = (idx + 1) % _bgmList.Count;
-            yield return GameManager.Coroutine.GetWfs(clip.length);
+            yield return Managers.Coroutine.GetWfs(clip.length);
         }
     }
 
@@ -76,7 +76,7 @@ public class SoundManager
 
         AudioClip clip = null;
 
-        clip = GameManager.Resource.GetClip(sfxName);
+        clip = Managers.Resource.GetClip(sfxName);
 
         if (clip == null) return;
 
@@ -114,7 +114,7 @@ public class SoundManager
     {
         _cts.Cancel();
         _cts = null;
-        GameManager.Object.Destroy(_root.gameObject);
+        Managers.Object.Destroy(_root.gameObject);
         _root = null;
         _sfxs.Clear();
     }

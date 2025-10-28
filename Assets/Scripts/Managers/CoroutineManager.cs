@@ -9,13 +9,15 @@ public class CoroutineManager
     private MonoBehaviour dondestroy; // 재사용
     private MonoBehaviour destroyed; // 사용중 파괴 가능
 
+    public void Init(){}
+
     public void StartCoroutine(IEnumerator coroutine, bool isDondestroy = false)
     {
         if (isDondestroy)
         {
             if (dondestroy == null)
             {
-                dondestroy = GameManager.Game;
+                dondestroy = Managers.Manager;
             }
                 dondestroy.StartCoroutine(coroutine);   
         }
@@ -37,7 +39,7 @@ public class CoroutineManager
         {
             if (dondestroy == null)
             {
-                dondestroy = GameManager.Game.gameObject.GetComponent<MonoBehaviour>();
+                dondestroy = Managers.Manager.gameObject.GetComponent<MonoBehaviour>();
             }
             dondestroy.StopCoroutine(coroutine);
         }
@@ -59,7 +61,7 @@ public class CoroutineManager
         {
             if (dondestroy == null)
             {
-                dondestroy = GameManager.Game.gameObject.GetComponent<MonoBehaviour>();
+                dondestroy = Managers.Manager.gameObject.GetComponent<MonoBehaviour>();
             }
             dondestroy.StopAllCoroutines();
         }

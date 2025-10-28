@@ -27,6 +27,8 @@ public class CameraManager
         }
     }
 
+    public void Init(){}
+
 
     public void SetFollowTarget(Transform target)
     {

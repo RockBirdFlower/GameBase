@@ -2,6 +2,7 @@ public static class Defines
 {
     public enum ManagerType
     {
+        Manager,
         GameManager,
         ResourceManager,
         ObjectManager,
@@ -27,5 +28,14 @@ public static class Defines
     {
         Bgm,
         Sfx,
+    }
+
+    public enum ButtonSelectionType
+    {
+        Normal,
+        Highlighted,
+        Pressed,
+        Selected,
+        Disabled,
     }
 }
