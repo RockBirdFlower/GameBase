@@ -6,85 +6,46 @@ using UnityEngine;
 public class CoroutineManager
 {
     private Dictionary<float, WaitForSeconds> _wfs = new();
-    private MonoBehaviour dondestroy; // 재사용
-    private MonoBehaviour destroyed; // 사용중 파괴 가능
+    private MonoBehaviour _manager;
+    private MonoBehaviour _scene;
 
-    public void Init(){}
-
-    public void StartCoroutine(IEnumerator coroutine, bool isDondestroy = false)
+    public void Init()
     {
-        if (isDondestroy)
-        {
-            if (dondestroy == null)
-            {
-                dondestroy = Managers.Manager;
-            }
-                dondestroy.StartCoroutine(coroutine);   
-        }
-        else
-        {
-            if (destroyed == null)
-            {
-                GameObject clone = new GameObject();
-                clone.name = $"{Defines.ManagerType.CoroutineManager}";
-                destroyed = clone.AddComponent<CoroutineController>();
-            }
-            destroyed.StartCoroutine(coroutine);
-        }
+        _manager = Managers.Manager;
     }
 
-    public void StopCoroutine(IEnumerator coroutine, bool isDondestroy = false)
+    public void SetSceneCorouine(Transform sceneController)
     {
-        if (isDondestroy)
-        {
-            if (dondestroy == null)
-            {
-                dondestroy = Managers.Manager.gameObject.GetComponent<MonoBehaviour>();
-            }
-            dondestroy.StopCoroutine(coroutine);
-        }
-        else
-        {
-            if (destroyed == null)
-            {
-                GameObject clone = new GameObject();
-                clone.name = $"{Defines.ManagerType.CoroutineManager}";
-                destroyed = clone.AddComponent<CoroutineController>();
-            }
-            destroyed.StopCoroutine(coroutine);
-        }
+        _scene = sceneController.GetComponent<Scene_Base_Controller>();
+    }
+
+    public void StartCoroutine(IEnumerator coroutine, bool immotal = false)
+    {
+        if (immotal)    _manager.StartCoroutine(coroutine);   
+      
+        else    _scene.StartCoroutine(coroutine);
+    }
+
+    public void StopCoroutine(IEnumerator coroutine, bool immotal = false)
+    {
+        if (immotal)     _manager.StopCoroutine(coroutine);
+
+        else    _scene.StopCoroutine(coroutine);
     }
     
-     public void StopAllCoroutines(bool isDondestroy = false)
+     public void StopAllCoroutines(bool immotal = false)
     {
-        if (isDondestroy)
-        {
-            if (dondestroy == null)
-            {
-                dondestroy = Managers.Manager.gameObject.GetComponent<MonoBehaviour>();
-            }
-            dondestroy.StopAllCoroutines();
-        }
-        else
-        {
-            if (destroyed == null)
-            {
-                GameObject clone = new GameObject();
-                clone.name = $"{Defines.ManagerType.CoroutineManager}";
-                destroyed = clone.AddComponent<CoroutineController>();
-            }
-            destroyed.StopAllCoroutines();
-        }
+        if (immotal)    _manager.StopAllCoroutines();
+      
+        else     _scene.StopAllCoroutines();
     }
     
     public WaitForSeconds GetWfs(float duration)
     {
         if (_wfs.ContainsKey(duration))
             return _wfs[duration];
-        else
-        {
-            _wfs[duration] = new WaitForSeconds(duration);
-            return _wfs[duration];
-        }
+        
+        _wfs[duration] = new WaitForSeconds(duration);
+        return _wfs[duration];
     }
 }

@@ -5,24 +5,25 @@ using System.Threading;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class SoundManager
 {
-    private Transform _root;
-    private AudioSource _bgm;
-    private Queue<AudioSource> _sfxs = new();
-    private int _sfxCount = 0;
     private CancellationTokenSource _cts;
+    
+    private Queue<AudioSource> _sfxs = new();
     private List<AudioClip> _bgmList = new();
+    private AudioSource _bgm;
+
     private float _sfxVolume = 1f;
     private float _bgmVolume = 1f;
+    private int _sfxCount = 0;
 
     public void Init()
     {
         _sfxVolume = PlayerPrefs.GetFloat(Consts.SFX_VOLUME, 1f);
         _bgmVolume = PlayerPrefs.GetFloat(Consts.BGM_VOLUME, 1f);
         _bgm = Managers.Manager.AddComponent<AudioSource>();
+        _cts = new();
     }
 
     public void SetSfxVolume(float volume)
@@ -67,12 +68,7 @@ public class SoundManager
 
     public void PlaySfx(string sfxName)
     {
-        if (_root == null)
-        {
-            _sfxCount = 0;
-            _root = new GameObject($"{Defines.ManagerType.SoundManager}").transform;
-            _cts = new();
-        }
+        var root = Managers.Object.SceneRoot;
 
         AudioClip clip = null;
 
@@ -91,7 +87,7 @@ public class SoundManager
             if (Consts.MAX_SFX_COUNT <= _sfxCount) return;
 
             GameObject clone = new GameObject($"{Defines.SoundType.Sfx}");
-            clone.transform.SetParent(_root);
+            clone.transform.SetParent(root);
             audio = clone.AddComponent<AudioSource>();
             audio.volume = _sfxVolume;
             _sfxCount++;
@@ -113,9 +109,6 @@ public class SoundManager
     public void Dispos()
     {
         _cts.Cancel();
-        _cts = null;
-        Managers.Object.Destroy(_root.gameObject);
-        _root = null;
         _sfxs.Clear();
     }
     

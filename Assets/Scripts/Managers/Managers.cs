@@ -25,6 +25,7 @@ public class Managers : MonoBehaviour
                 clone.name = $"{Defines.ManagerType.Manager}";
                 _manager = clone.AddComponent<Managers>();
                 DontDestroyOnLoad(_manager);
+                _manager.Init();
             }
 
             return _manager;
@@ -153,6 +154,7 @@ public class Managers : MonoBehaviour
 
     public void Init()
     {
+        if(Game.IsInit) return;
         Game.Init();
         Resource.Init();
         Object.Init();

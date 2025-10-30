@@ -26,6 +26,25 @@ public class CommandManager
         return Keyboard.current[key].wasReleasedThisFrame;
     }
 
+    public bool GetAnyKey() // 키보드 눌러질때 지속
+    {
+        if (Keyboard.current == null) return false;
+
+        return Keyboard.current.anyKey.isPressed;
+    }
+    public bool GetAnykeyDown() // 키보드 누를때 한 번
+    {
+        if (Keyboard.current == null) return false;
+
+        return Keyboard.current.anyKey.wasPressedThisFrame;
+    }
+    public bool GetAnykeyUp() // 키보드 올라올때 한 번
+    {
+        if (Keyboard.current == null) return false;
+
+        return Keyboard.current.anyKey.wasReleasedThisFrame;
+    }
+
     public bool GetMouse(int mouseButton)
     {
         if (Mouse.current == null) return false;

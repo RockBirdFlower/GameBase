@@ -1,20 +1,29 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIManager
 {
     private int _uiIndex;
-    private Transform _root;
+    private Transform _sceneRoot;
 
-    public void Init(){}
+    public void Init()
+    {
+        var enventSystem = GameObject.FindObjectsByType<EventSystem>(FindObjectsSortMode.None);
+        for (int i = 0; i < enventSystem.Length; i++)
+        {
+            GameObject.Destroy(enventSystem[i]);
+        }
+
+        Managers.Object.Create("EventSystem", isImmortal:true);
+    }
+
+    public void SetSceneRoot(Transform root)
+    {
+        _sceneRoot = root;
+    }
 
     public GameObject Open(string uiPrefabName)
     {
-        if (_root == null)
-        {
-            _uiIndex = Consts.UI_START_ORDER;
-            _root = new GameObject($"{Defines.ManagerType.UIManager}").transform;
-            Managers.Object.Create("EventSystem");
-        }
         GameObject prefab = Managers.Object.Create(uiPrefabName);
         prefab.GetComponentInChildren<Canvas>().sortingOrder = _uiIndex;
         _uiIndex++;

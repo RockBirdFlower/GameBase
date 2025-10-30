@@ -7,7 +7,7 @@ public static class Edit_Create
     [MenuItem("GameObject/UI/Button_Effect")]
     public static void Create_Button_Effect(MenuCommand menuCommand)
     {
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/Prefabs/Common/Button_Effect.prefab");
+        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Resources/Prefabs/UI/Common/Button_Effect.prefab");
         if(prefab == null) return;
         
         GameObject parent = Selection.activeGameObject;

@@ -1,21 +1,19 @@
 using System;
-using UnityEngine.UI;
 
 public static class ExButton
 {
-
-    public static void OnButtonClick(this Button button, Action action)
+    public static void EventAdd(this Button_Effect button, Defines.ButtonSelectionType selectionType, Action action)
     {
-        button.onClick.AddListener(action.Invoke);
+        button.AddEvent(selectionType, action);
     }
     
-    public static void RemoveListeners(this Button button, Action action)
+    public static void EventRemove(this Button_Effect button , Defines.ButtonSelectionType selectionType, Action action)
     {
-        button.onClick.RemoveListener(action.Invoke);
+        button.RemoveEvent(selectionType, action.Invoke);
     }
 
-    public static void RemoveAllListeners(this Button button)
+    public static void EventRemoveAll(this Button_Effect button, Defines.ButtonSelectionType selectionType)
     {
-        button.onClick.RemoveAllListeners();
+        button.RemoveAllEvent(selectionType);
     }
 }

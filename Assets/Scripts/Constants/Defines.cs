@@ -32,10 +32,11 @@ public static class Defines
 
     public enum ButtonSelectionType
     {
-        Normal,
+        Clicked,
         Highlighted,
         Pressed,
-        Selected,
+        SelectEnabled,
         Disabled,
+        SelectDisabled,
     }
 }
